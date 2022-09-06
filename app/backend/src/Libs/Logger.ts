@@ -28,17 +28,22 @@ winston.addColors(colors)
 
 const format = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
-  winston.format.colorize({ all: true }),
   winston.format.printf(
     (info) => `${info.timestamp} ${info.level}: ${info.message}`
   )
 )
 
+
+const colorize = winston.format.colorize({ all: true });
+
 const transports = [
-  new winston.transports.Console(),
+  new winston.transports.Console({
+    format: winston.format.combine(format, colorize),
+  }),
   new winston.transports.File({
     filename: 'logs/error.log',
     level: 'error',
+    format: winston.format.combine(format),
   }),
   new winston.transports.File({ filename: 'logs/all.log' })
 ]
@@ -47,7 +52,6 @@ const transports = [
 const Logger = winston.createLogger({
   level: level(),
   levels,
-  format,
   transports,
 })
 
