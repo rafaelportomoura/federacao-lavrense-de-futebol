@@ -14,8 +14,8 @@ class Cryptography {
     return this.private_key.encryptPrivate(data, 'base64');
   }
 
-  public decrypt(data: string): string {
-    return this.public_key.decryptPublic(data, 'base64');
+  public decrypt(data: string): JSON {
+    return this.public_key.decryptPublic(data, 'json');
   }
 
   public encryptBuffer(buffer: NodeRsa.Data): Buffer {

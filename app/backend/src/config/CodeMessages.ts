@@ -25,6 +25,18 @@ const CODE_MESSAGES: ICodeMessages = {
     code: '0006',
     message: 'Successfully logged in!',
   },
+  UNAUTHORIZED: {
+    code: '0007',
+    message: 'Invalid Token!',
+  },
+  PASSWORD_CHANGE_SUCCESS: {
+    code: '0008',
+    message: 'Password was changed!',
+  },
+  PASSWORD_CHANGE_ERROR: {
+    code: '0009',
+    message: 'It was not possible to change the password!',
+  },
 } as const;
 
 export default CODE_MESSAGES;

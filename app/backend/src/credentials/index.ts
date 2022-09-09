@@ -24,7 +24,7 @@ class Credentials {
     return this.cryptography.encrypt(data);
   }
 
-  public decrypt(data: string): string {
+  public decrypt(data: string): JSON {
     return this.cryptography.decrypt(data);
   }
 }

@@ -3,5 +3,10 @@ export interface IUser {
   password: string;
   token?: string;
   codigo?: number;
-  expiration: Date;
+  expiration?: string;
+}
+
+export interface IUserLoginReturn {
+  expiration: string;
+  token: string;
 }
