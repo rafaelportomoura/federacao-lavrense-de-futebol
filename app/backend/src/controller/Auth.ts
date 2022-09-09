@@ -1,20 +1,27 @@
 import { Request, Response } from 'express';
 import Logger from '../Libs/Logger';
+import MySQL from '../database/mysql';
 
 class AuthController {
+  database: MySQL;
+
   constructor() {
+    this.database = MySQL.getInstance();
     Logger.debug("Constructor");
   }
 
-  logger(request: Request, response: Response): void {
+  public async logger(request: Request, response: Response): Promise<void> {
+    try {
+      console.log(this)
+      console.log(this.database)
+      await this.database.connect();
 
-    Logger.error("This is an error log");
-    Logger.warn("This is a warn log");
-    Logger.info("This is a info log");
-    Logger.http("This is a http log");
-    Logger.debug("This is a debug log");
-
-    response.send({ "message": "Hello world" });
+      response.send({ "message": "Hello world" });
+    } catch (error) {
+      console.log(error)
+      Logger.error('Eita porra')
+      response.send({ "error": "error" });
+    }
   }
 }
 

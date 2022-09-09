@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Partida` (
   PRIMARY KEY (`idPartida`),
   INDEX `idCampeonato_idx` (`idCampeonato` ASC) VISIBLE,
   UNIQUE INDEX `idPartida_UNIQUE` (`idPartida` ASC) VISIBLE,
-  CONSTRAINT `idCampeonato`
+  CONSTRAINT `PartidaidCampeonato`
     FOREIGN KEY (`idCampeonato`)
     REFERENCES `FLF`.`Campeonato` (`idCampeonato`)
     ON DELETE NO ACTION
@@ -73,12 +73,12 @@ CREATE TABLE IF NOT EXISTS `FLF`.`PartidaTime` (
   `idTime` INT(11) NOT NULL,
   PRIMARY KEY (`idPartida`, `idTime`),
   INDEX `idTime_idx` (`idTime` ASC) VISIBLE,
-  CONSTRAINT `idTime`
+  CONSTRAINT `PartidaTimeidTime`
     FOREIGN KEY (`idTime`)
     REFERENCES `FLF`.`Time` (`idTime`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idPartida`
+  CONSTRAINT `PartidaTimeidPartida`
     FOREIGN KEY (`idPartida`)
     REFERENCES `FLF`.`Partida` (`idPartida`)
     ON DELETE NO ACTION
@@ -94,12 +94,12 @@ CREATE TABLE IF NOT EXISTS `FLF`.`CampeonatoTime` (
   `idTime` INT(11) NOT NULL,
   PRIMARY KEY (`idCampeonato`, `idTime`),
   INDEX `idTime_idx` (`idTime` ASC) VISIBLE,
-  CONSTRAINT `idCampeonato`
+  CONSTRAINT `CampeonatoTimeidCampeonato`
     FOREIGN KEY (`idCampeonato`)
     REFERENCES `FLF`.`Campeonato` (`idCampeonato`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idTime`
+  CONSTRAINT `CampeonatoTimeidTime`
     FOREIGN KEY (`idTime`)
     REFERENCES `FLF`.`Time` (`idTime`)
     ON DELETE NO ACTION
@@ -118,12 +118,12 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Gol` (
   UNIQUE INDEX `idGol_UNIQUE` (`idGol` ASC) VISIBLE,
   INDEX `idTime_idx` (`idTime` ASC) VISIBLE,
   INDEX `idPartida_idx` (`idPartida` ASC) VISIBLE,
-  CONSTRAINT `idTime`
+  CONSTRAINT `GolidTime`
     FOREIGN KEY (`idTime`)
     REFERENCES `FLF`.`Time` (`idTime`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idPartida`
+  CONSTRAINT `GolidPartida`
     FOREIGN KEY (`idPartida`)
     REFERENCES `FLF`.`Partida` (`idPartida`)
     ON DELETE NO ACTION

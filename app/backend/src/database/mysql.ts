@@ -8,11 +8,14 @@ class MySQL {
 
   private config: IMySql.DbParams
 
+  private uri: IMySql.Uri;
+
   private connection: mysql.Connection;
 
   private constructor(DB_CONFIG: IMySql.DbParams) {
     this.config = DB_CONFIG;
     this.connection = null;
+    this.uri = `mysql://${this.config.user}:${this.config.password}@${this.config.host}/${this.config.database}`
   }
 
   public static getInstance(DB_CONFIG: IMySql.DbParams = CONFIG.DB): MySQL {
@@ -23,8 +26,8 @@ class MySQL {
     return MySQL.instance;
   }
 
-  public async createConnection(): Promise<mysql.Connection> {
-    this.connection = await mysql.createConnection(this.config)
+  public async connect(): Promise<mysql.Connection> {
+    this.connection = await mysql.createConnection(this.uri)
 
     await this.connection.connect();
 

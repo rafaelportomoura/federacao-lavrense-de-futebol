@@ -7,6 +7,8 @@ namespace IMySql {
     database: string
   };
 
+  export type Uri = `mysql://${string}:${string}@${string}/${string}`
+
   export type Callback = () => void;
 }
 
