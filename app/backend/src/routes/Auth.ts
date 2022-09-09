@@ -10,6 +10,7 @@ const auth_controller = new AuthController();
 function routes(app: typeof router) {
   app.use('/auth', router)
 
+  router.post('/create', auth_controller.postUser.bind(auth_controller), error_middleware)
   router.get('/login', auth_controller.login.bind(auth_controller), error_middleware)
 }
 

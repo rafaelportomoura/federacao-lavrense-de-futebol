@@ -135,8 +135,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FLF`.`Usuario` (
   `email` VARCHAR(60) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` LONGTEXT NOT NULL,
   `token` LONGTEXT NULL,
+  `expiration` DATETIME NOT NULL,
   `codigo` INT(6) NULL,
   PRIMARY KEY (`email`),
   INDEX `email_UNIQUE` (`email` ASC) VISIBLE)

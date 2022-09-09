@@ -3,4 +3,5 @@ export interface IUser {
   password: string;
   token?: string;
   codigo?: number;
+  expiration: Date;
 }
