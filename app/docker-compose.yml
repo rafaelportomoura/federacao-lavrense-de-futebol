@@ -13,7 +13,7 @@ services:
     restart: always
     volumes:
       - ./database/scripts:/docker-entrypoint-initdb.d
-      - ./database/data:/var/lib/mysql
+      # - ./database/data:/var/lib/mysql
     env_file: .env
     ports:
       - 3306:3306

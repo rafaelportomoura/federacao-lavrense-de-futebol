@@ -1,26 +1,21 @@
 import { Request, Response } from 'express';
 import Logger from '../Libs/Logger';
-import MySQL from '../database/mysql';
+import AuthService from '../services/Auth'
 
 class AuthController {
-  database: MySQL;
+  private user_service: AuthService;
 
   constructor() {
-    this.database = MySQL.getInstance();
-    Logger.debug("Constructor");
+    this.user_service = new AuthService();
   }
 
-  public async logger(request: Request, response: Response): Promise<void> {
+  public async login(req: Request, res: Response): Promise<void> {
     try {
-      console.log(this)
-      console.log(this.database)
-      await this.database.connect();
-
-      response.send({ "message": "Hello world" });
+      const response = await this.user_service.getUser();
+      res.json(response);
     } catch (error) {
-      console.log(error)
       Logger.error('Eita porra')
-      response.send({ "error": "error" });
+      res.send({ "error": "error" });
     }
   }
 }

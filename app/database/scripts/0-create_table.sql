@@ -130,6 +130,40 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Gol` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`Usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `FLF`.`Usuario` (
+  `email` VARCHAR(60) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `token` LONGTEXT NULL,
+  `codigo` INT(6) NULL,
+  PRIMARY KEY (`email`),
+  INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`AtividadeDoUsuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `FLF`.`AtividadeDoUsuario` (
+  `idAtividadeDoUsuario` VARCHAR(32) NOT NULL,
+  `body` JSON NULL,
+  `query` JSON NULL,
+  `parameters` JSON NULL,
+  `path` VARCHAR(60) NOT NULL,
+  `IP` VARCHAR(16) NOT NULL,
+  `email` VARCHAR(60) NOT NULL,
+  `timestamp` DATETIME NOT NULL,
+  PRIMARY KEY (`idAtividadeDoUsuario`),
+  UNIQUE INDEX `idAtividadeDoUsuario_UNIQUE` (`idAtividadeDoUsuario` ASC) VISIBLE,
+  INDEX `UsuarioEmail_idx` (`email` ASC) VISIBLE,
+  CONSTRAINT `UsuarioEmail`
+    FOREIGN KEY (`email`)
+    REFERENCES `FLF`.`Usuario` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
