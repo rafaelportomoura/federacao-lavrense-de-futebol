@@ -7,3 +7,8 @@ export const post_user = Joi.object().keys({
   email: user_email.required(),
   password: password.required(),
 });
+
+export const login_user = Joi.object().keys({
+  email: user_email.required(),
+  password: password.required(),
+});

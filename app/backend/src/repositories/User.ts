@@ -12,8 +12,13 @@ class UserRepository {
     this.table = TABLES.Usuario;
   }
 
-  public async getUser(): Promise<Array<IUser>> {
-    const response = await knex<IUser>(this.table).select()
+  public async geUserByEmailAndPassword(user: IUser): Promise<Array<IUser>> {
+    const response = await knex<IUser>(this.table).select().where(user)
+    return response;
+  }
+
+  public async getUserByEmail(email: string): Promise<Array<IUser>> {
+    const response = await knex<IUser>(this.table).select().where({ email });
     return response;
   }
 

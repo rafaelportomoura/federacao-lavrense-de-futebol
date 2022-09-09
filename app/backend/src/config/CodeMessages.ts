@@ -17,6 +17,14 @@ const CODE_MESSAGES: ICodeMessages = {
     code: '0004',
     message: 'Error when call database',
   },
+  INVALID_LOGIN: {
+    code: '0005',
+    message: 'Wrong email or password!',
+  },
+  SUCCESS_LOGIN: {
+    code: '0006',
+    message: 'Successfully logged in!',
+  },
 } as const;
 
 export default CODE_MESSAGES;
