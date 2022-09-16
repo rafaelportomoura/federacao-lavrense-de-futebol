@@ -37,6 +37,10 @@ const CODE_MESSAGES: ICodeMessages = {
     code: '0009',
     message: 'It was not possible to change the password!',
   },
+  SUCCESS_POST_USER: {
+    code: '0010',
+    message: 'User was created!',
+  },
 } as const;
 
 export default CODE_MESSAGES;

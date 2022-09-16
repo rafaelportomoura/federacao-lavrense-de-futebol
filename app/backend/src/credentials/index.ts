@@ -14,7 +14,7 @@ class Credentials {
   }
 
   static async getInstance() {
-    if (!Credentials.credentials_instance) Credentials.credentials_instance = new Credentials(await fs.readFile('./id_rsa', 'utf-8'), await fs.readFile('./id_rsa.pub', 'utf-8'));
+    if (!Credentials.credentials_instance) Credentials.credentials_instance = new Credentials(await fs.readFile('/home/node/.ssh/id_rsa', 'utf-8'), await fs.readFile('/home/node/.ssh/id_rsa.pub', 'utf-8'));
 
 
     return Credentials.credentials_instance;

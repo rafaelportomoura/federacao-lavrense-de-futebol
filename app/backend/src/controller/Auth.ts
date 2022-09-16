@@ -17,8 +17,8 @@ class AuthController {
   public async postUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const body = schemaValidator<IUser>(req.body, post_user);
-      const response = await this.user_service.postUser(body);
-      res.status(HTTP_STATUS_CODES.CREATED).json(response);
+      await this.user_service.postUser(body);
+      res.status(HTTP_STATUS_CODES.CREATED).json(CODE_MESSAGES.SUCCESS_POST_USER);
     } catch (error) {
       Logger.error(`[PostUser]: ${error.message}`)
       next(error);
