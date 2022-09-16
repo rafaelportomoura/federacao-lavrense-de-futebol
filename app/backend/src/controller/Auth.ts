@@ -7,7 +7,6 @@ import { schemaValidator } from '../Libs/CommonsValidator'
 import CODE_MESSAGES from '../config/CodeMessages';
 import HTTP_STATUS_CODES from '../config/httpStatusCode';
 
-
 class AuthController {
   private user_service: AuthService;
 

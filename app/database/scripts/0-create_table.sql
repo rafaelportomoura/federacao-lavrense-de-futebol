@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Usuario` (
   `email` VARCHAR(60) NOT NULL,
   `password` LONGTEXT NOT NULL,
   `token` LONGTEXT NULL,
-  `expiration` VARCHAR(24) NOT NULL,
+  `expiration` VARCHAR(24) NULL,
   `codigo` INT(6) NULL,
   PRIMARY KEY (`email`),
   INDEX `email_UNIQUE` (`email` ASC) VISIBLE)

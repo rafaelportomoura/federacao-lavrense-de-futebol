@@ -1,17 +1,9 @@
 FROM node:16-alpine3.14
 
-ADD ["./package.json", "/package.json"]
-ADD ["./src", "./src"]
+WORKDIR /home/node/app
 
-RUN yarn
-RUN yarn:build
+RUN apk add --no-cache openssh
+RUN ssh-keygen -t rsa -b 4096 -f ./id_rsa
 
-RUN rm -rf ./node_modules ./yarn.lock
 
-RUN yarn install --ignore-engines --production=true
-RUN find ./node_modules -mtime +10950 -exec touch {} +
-
-RUN chmod 777 /dist
-RUN chmod 777 /dist/*
-RUN chmod 777 /package.json
 

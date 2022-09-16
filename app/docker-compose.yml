@@ -1,7 +1,8 @@
 version: '3.1'
 
 volumes:
-  db_vol:
+  database:
+  backend:
     
 services:
 
@@ -14,12 +15,42 @@ services:
     volumes:
       - ./database/scripts:/docker-entrypoint-initdb.d
       # - ./database/data:/var/lib/mysql
-    env_file: .env
+    env_file: db.env
     ports:
       - 3306:3306
+    networks:
+      - backend
 
   adminer-db:
     image: adminer
     restart: always
+    depends_on:
+      - db
     ports:
       - 8081:8080
+    networks:
+      - backend
+  
+  backend:
+    image: flf/backend-dev
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    user: "node"
+    env_file: 
+      - db.env
+      - back.env
+    entrypoint: ["sh", "-c"]
+    command: ["yarn && yarn dev"]
+    volumes:
+      - ./backend:/home/node/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - backend
+
+networks:
+  backend:
+  frontend:
