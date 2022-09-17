@@ -1,5 +1,5 @@
 import ApiError from "./ApiError";
-import CODE_MESSAGES from "../config/CodeMessages";
+import { CODE_MESSAGES } from "../config/CodeMessages";
 import { ICodeMessageFunction, ICodeMessage } from "../Interfaces/ICodeMessage";
 import HTTP_STATUS_CODES from "../config/httpStatusCode";
 import { ISqlError } from '../Interfaces/ISQLError';

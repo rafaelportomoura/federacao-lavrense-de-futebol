@@ -4,7 +4,7 @@ import { IUser } from "../Interfaces/IUser";
 import Logger from '../Libs/Logger';
 import AuthService from '../services/Auth'
 import { schemaValidator } from '../Libs/CommonsValidator'
-import CODE_MESSAGES from '../config/CodeMessages';
+import { CODE_MESSAGES } from '../config/CodeMessages';
 import HTTP_STATUS_CODES from '../config/httpStatusCode';
 
 class AuthController {

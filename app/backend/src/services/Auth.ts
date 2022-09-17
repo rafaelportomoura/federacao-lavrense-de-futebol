@@ -3,7 +3,7 @@ import { IUser, IUserLoginReturn } from '../Interfaces/IUser';
 import UserRepository from '../repositories/User';
 import Credentials from '../credentials/index'
 import ApiError from '../exceptions/ApiError';
-import CODE_MESSAGES from '../config/CodeMessages';
+import { CODE_MESSAGES } from '../config/CodeMessages';
 
 class AuthService {
   private repository: UserRepository;

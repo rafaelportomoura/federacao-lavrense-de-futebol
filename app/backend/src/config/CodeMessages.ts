@@ -1,46 +1,38 @@
 import { ICodeMessages } from "../Interfaces/ICodeMessage";
 
-const CODE_MESSAGES: ICodeMessages = {
-  UNHANDLED_ERROR: (x: string) => ({
-    code: '0001',
-    message: x,
-  }),
-  INVALID_DATA: (x: string) => ({
-    code: '0002',
-    message: x,
-  }),
-  ALREADY_EXIST_DATA: (object_name: string) => ({
-    code: '0003',
-    message: `Already have this ${object_name} in database`,
-  }),
+// 1000 a 1999
+
+export const CODE_MESSAGES: ICodeMessages = {
   ERROR_DB: {
-    code: '0004',
+    code: '1000',
     message: 'Error when call database',
   },
   INVALID_LOGIN: {
-    code: '0005',
+    code: '1001',
     message: 'Wrong email or password!',
   },
   SUCCESS_LOGIN: {
-    code: '0006',
+    code: '1002',
     message: 'Successfully logged in!',
   },
   UNAUTHORIZED: {
-    code: '0007',
+    code: '1003',
     message: 'Invalid Token!',
   },
   PASSWORD_CHANGE_SUCCESS: {
-    code: '0008',
+    code: '1004',
     message: 'Password was changed!',
   },
   PASSWORD_CHANGE_ERROR: {
-    code: '0009',
+    code: '1005',
     message: 'It was not possible to change the password!',
   },
   SUCCESS_POST_USER: {
-    code: '0010',
+    code: '1006',
     message: 'User was created!',
   },
+  INTERNAL_SERVER_ERROR: {
+    code: '1007',
+    message: 'INTERNAL SERVER ERROR',
+  },
 } as const;
-
-export default CODE_MESSAGES;

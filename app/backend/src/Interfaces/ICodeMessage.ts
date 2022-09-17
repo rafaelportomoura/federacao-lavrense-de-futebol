@@ -7,5 +7,9 @@ export interface ICodeMessage {
 export type ICodeMessageFunction = (x: string) => ICodeMessage;
 
 export interface ICodeMessages {
-  [key: string]: ICodeMessage | ICodeMessageFunction
+  [key: string]: ICodeMessage
+}
+
+export interface ICodeMessagesFunction {
+  [key: string]: ICodeMessageFunction
 }

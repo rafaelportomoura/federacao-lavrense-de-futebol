@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { ICodeMessage } from '../Interfaces/ICodeMessage';
 import HTTP_STATUS_CODE from '../config/httpStatusCode';
+import { CODE_MESSAGES } from '../config/CodeMessages';
 
 namespace ApiError {
   export class ApiErrorMother extends Error {
@@ -21,6 +22,12 @@ namespace ApiError {
   export class BusinessError extends ApiErrorMother {
     constructor(code_message: ICodeMessage) {
       super('BusinessError', code_message, HTTP_STATUS_CODE.BAD_REQUEST);
+    }
+  }
+
+  export class InternalServerError extends ApiErrorMother {
+    constructor() {
+      super('InternalServerError', CODE_MESSAGES.INTERNAL_SERVER_ERROR, HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
     }
   }
 

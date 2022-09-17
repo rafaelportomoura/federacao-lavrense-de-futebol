@@ -3,3 +3,4 @@ node_modules/
 app/database/data
 id_rsa
 id_rsa.pub
+.nyc_output/
