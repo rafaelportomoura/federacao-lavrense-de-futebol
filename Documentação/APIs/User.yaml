@@ -1,0 +1,205 @@
+openapi: 3.0.1
+info:
+  title: Auth
+  description: Federação Lavrense de Futebol
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desenvolvimento
+
+tags:
+  - name: Auth
+    description: Gerencia os usuários do sistema
+
+paths:
+  /auth/create:
+    post:
+      summary: Create a user
+      description: This resource create a individual user in the system
+        Each user is identified by a string `email`.
+      tags:
+        - Auth
+      requestBody:
+        description: Required body to create user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequired"
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UserCreated:
+                  $ref: "#/components/schemas/ResponseUserCreated"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorEmail:
+                  $ref: "#/components/schemas/ResponseValidationErrorEmail"
+                ValidationErrorPassword:
+                  $ref: "#/components/schemas/ResponseValidationErrorPassword"
+                AlreadyHaveUserInDatabase:
+                  $ref: "#/components/schemas/ResponseAlreadyHave"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+  /login:
+    post:
+      summary: Login at systems
+      description: This resource create a login at system
+      tags:
+        - Auth
+      requestBody:
+        description: Required body to login
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequired"
+      responses:
+        200:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseLoginSchema"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorEmail:
+                  $ref: "#/components/schemas/ResponseValidationErrorEmail"
+                ValidationErrorPassword:
+                  $ref: "#/components/schemas/ResponseValidationErrorPassword"
+                WrongEmailOrPassword:
+                  $ref: "#/components/schemas/ResponseWrongEmailOrPassword"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+  /password:
+    patch:
+      summary: Change user password
+      description: This resource create to change user password
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Required body to change password
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                PasswordWasChanged:
+                  $ref: "#/components/schemas/ResponsePasswordWasChanged"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+components:
+  schemas:
+    ResponseCodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ResponsePasswordWasChanged:
+      value:
+        code: "1004"
+        message: "Password was changed!"
+    ResponseLoginSchema:
+      type: object
+      properties:
+        code:
+          type: string
+          default: "1002"
+        message:
+          type: string
+          default: Successfully logged in!
+        token:
+          type: string
+          format: byte
+        expiration:
+          type: string
+          format: date-time
+    ResponseWrongEmailOrPassword:
+      value:
+        code: "1001"
+        message: "Wrong email or password!"
+    ResponseUserCreated:
+      value:
+        code: "1006"
+        message: User was created!
+    ResponseAlreadyHave:
+      value:
+        code: "0003"
+        message: Already have this user in database
+    ResponseValidationErrorEmail:
+      value:
+        code: "0002"
+        message: '[email] "email" is required'
+    ResponseValidationErrorPassword:
+      value:
+        code: "0002"
+        message: '[password] "password" is required'
+    InternalServerError:
+      value:
+        code: "1007"
+        message: INTERNAL SERVER ERROR
+    UserRequired:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      name: Authorization
+      in: header
