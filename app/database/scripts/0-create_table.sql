@@ -34,15 +34,15 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `FLF`.`Campeonato` (
   `idCampeonato` INT(11) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
-  `idTimeVencedor` INT(11) NOT NULL,
+  `idTimeVencedor` INT(11) NULL,
   `image` TINYTEXT NULL,
   PRIMARY KEY (`idCampeonato`),
   INDEX `idTimeVencedor_idx` (`idTimeVencedor` ASC) VISIBLE,
   CONSTRAINT `idTimeVencedor`
     FOREIGN KEY (`idTimeVencedor`)
     REFERENCES `FLF`.`Time` (`idTime`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Partida` (
   CONSTRAINT `PartidaidCampeonato`
     FOREIGN KEY (`idCampeonato`)
     REFERENCES `FLF`.`Campeonato` (`idCampeonato`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
@@ -76,13 +76,13 @@ CREATE TABLE IF NOT EXISTS `FLF`.`PartidaTime` (
   CONSTRAINT `PartidaTimeidTime`
     FOREIGN KEY (`idTime`)
     REFERENCES `FLF`.`Time` (`idTime`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
   CONSTRAINT `PartidaTimeidPartida`
     FOREIGN KEY (`idPartida`)
     REFERENCES `FLF`.`Partida` (`idPartida`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
@@ -97,13 +97,13 @@ CREATE TABLE IF NOT EXISTS `FLF`.`CampeonatoTime` (
   CONSTRAINT `CampeonatoTimeidCampeonato`
     FOREIGN KEY (`idCampeonato`)
     REFERENCES `FLF`.`Campeonato` (`idCampeonato`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT,
   CONSTRAINT `CampeonatoTimeidTime`
     FOREIGN KEY (`idTime`)
     REFERENCES `FLF`.`Time` (`idTime`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
@@ -121,13 +121,13 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Gol` (
   CONSTRAINT `GolidTime`
     FOREIGN KEY (`idTime`)
     REFERENCES `FLF`.`Time` (`idTime`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT,
   CONSTRAINT `GolidPartida`
     FOREIGN KEY (`idPartida`)
     REFERENCES `FLF`.`Partida` (`idPartida`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -162,8 +162,8 @@ CREATE TABLE IF NOT EXISTS `FLF`.`AtividadeDoUsuario` (
   CONSTRAINT `UsuarioEmail`
     FOREIGN KEY (`email`)
     REFERENCES `FLF`.`Usuario` (`email`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
