@@ -12,7 +12,7 @@ function routes(app: typeof router) {
 
   router.post('/create', auth_controller.postUser.bind(auth_controller), error_middleware)
   router.post('/login', auth_controller.login.bind(auth_controller), error_middleware)
-  router.post('/password', auth_controller.validLoginToken.bind(auth_controller), auth_controller.changePassword.bind(auth_controller), error_middleware)
+  router.patch('/password', auth_controller.validLoginToken.bind(auth_controller), auth_controller.changePassword.bind(auth_controller), error_middleware)
 }
 
 export default routes;
