@@ -29,9 +29,9 @@ class AuthController {
     try {
       const { email, password } = schemaValidator<IUser>(req.body, change_password);
       await this.user_service.changePassword(email, password);
-      res.status(HTTP_STATUS_CODES.OK).json({ ...CODE_MESSAGES.PASSWORD_CHANGE_SUCCESS });
+      res.status(HTTP_STATUS_CODES.OK).json(CODE_MESSAGES.PASSWORD_CHANGE_SUCCESS);
     } catch (error) {
-      Logger.error(`[Login]: ${error.message}`)
+      Logger.error(`[ChangePassword]: ${error.message}`)
       next(error);
     }
   }
