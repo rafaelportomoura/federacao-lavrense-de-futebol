@@ -11,9 +11,6 @@ O objetivo deste sistema é proporcionar uma interface para que a FLF possa orga
 
 - [Figma](https://www.figma.com/file/j6eV1HmmW8XD7hbb3ZDqOQ/FLF?node-id=0%3A1)
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2Fj6eV1HmmW8XD7hbb3ZDqOQ%2FFLF%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
-
-
 ## 🧑🏻‍💻 Tecnologias
 
 - JavaScript (ECMAScript 2021)
