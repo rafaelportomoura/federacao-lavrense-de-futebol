@@ -1,0 +1,6 @@
+node_modules/
+*.log
+app/database/data
+id_rsa
+id_rsa.pub
+.nyc_output/
