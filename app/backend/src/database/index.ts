@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import knex from 'knex';
+import { attachPaginate } from 'knex-paginate';
 import CONFIG from '../config/Environments';
 import Logger from '../Libs/Logger';
 
@@ -28,3 +29,5 @@ export default knex({
   },
   acquireConnectionTimeout: 10000,
 })
+
+attachPaginate();

@@ -84,14 +84,14 @@ paths:
             type: number
             min: 10
             default: 10
-        - name: IdCamp
+        - name: id_camp
           in: query
           required: false
           schema:
             type: number
-            min: 0
+            min: 1
             max: 99999999999
-        - name: name
+        - name: nome
           in: query
           required: false
           schema:
@@ -145,7 +145,7 @@ paths:
           required: true
           schema:
             type: number
-          min: 0
+          min: 1
           max: 99999999999
       responses:
         200:
@@ -201,7 +201,7 @@ paths:
           required: true
           schema:
             type: number
-            min: 0
+            min: 1
             max: 99999999999
       requestBody:
         description: Required body to create team
@@ -269,7 +269,7 @@ paths:
           required: true
           schema:
             type: number
-            min: 0
+            min: 1
             max: 99999999999
       responses:
         200:
@@ -377,11 +377,14 @@ components:
       properties:
         idTime:
           type: integer
-          min: 0
+          min: 1
           max: 99999999999
         nome:
           type: string
           uniqueItems: true
+        image:
+          type: string
+          format: binary
     TeamRequired:
       type: object
       properties:
@@ -391,19 +394,19 @@ components:
     GetPaginatedTeam:
       type: object
       properties:
-        current_page:
+        total:
           type: number
-          min: 1
-        total_pages:
+        lastPage:
           type: number
-          min: 1
-        current_items:
+        currentPage:
           type: number
-          min: 0
-        total_items:
+        perPage:
           type: number
-          min: 0
-        teams:
+        from:
+          type: number
+        to:
+          type: number
+        data:
           type: array
           items:
             $ref: "#/components/schemas/Team"

@@ -21,7 +21,7 @@ USE `FLF` ;
 -- Table `FLF`.`Time`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FLF`.`Time` (
-  `idTime` INT(11) NOT NULL,
+  `idTime` INT(11) AUTO_INCREMENT, 
   `nome` VARCHAR(80) NULL,
   `image` BLOB NULL,
   PRIMARY KEY (`idTime`))
@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- Table `FLF`.`Campeonato`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FLF`.`Campeonato` (
-  `idCampeonato` INT(11) NOT NULL,
+  `idCampeonato` INT(11) AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `idTimeVencedor` INT(11) NULL,
   `image` BLOB NULL,
@@ -50,7 +50,7 @@ ENGINE = InnoDB;
 -- Table `FLF`.`Partida`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FLF`.`Partida` (
-  `idPartida` INT(11) NOT NULL AUTO_INCREMENT,
+  `idPartida` INT(11) AUTO_INCREMENT,
   `data` DATETIME NOT NULL,
   `idCampeonato` INT(11) NOT NULL,
   `tipo` VARCHAR(45) NULL,
@@ -111,7 +111,7 @@ ENGINE = InnoDB;
 -- Table `FLF`.`Gol`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FLF`.`Gol` (
-  `idGol` INT(11) NOT NULL AUTO_INCREMENT,
+  `idGol` INT(11)  AUTO_INCREMENT,
   `idTime` INT(11) NOT NULL,
   `idPartida` INT(11) NOT NULL,
   PRIMARY KEY (`idGol`),

@@ -35,7 +35,7 @@ export const CODE_MESSAGES: ICodeMessages = {
     code: '1007',
     message: 'INTERNAL SERVER ERROR',
   },
-  TEAM_WAS_CREATED: {
+  SUCCESS_POST_TEAM: {
     code: "1008",
     message: "Team was created!",
   },
