@@ -23,7 +23,7 @@ USE `FLF` ;
 CREATE TABLE IF NOT EXISTS `FLF`.`Time` (
   `idTime` INT(11) NOT NULL,
   `nome` VARCHAR(80) NULL,
-  `image` TINYTEXT NULL,
+  `image` BLOB NULL,
   PRIMARY KEY (`idTime`))
 ENGINE = InnoDB;
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `FLF`.`Campeonato` (
   `idCampeonato` INT(11) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   `idTimeVencedor` INT(11) NULL,
-  `image` TINYTEXT NULL,
+  `image` BLOB NULL,
   PRIMARY KEY (`idCampeonato`),
   INDEX `idTimeVencedor_idx` (`idTimeVencedor` ASC) VISIBLE,
   CONSTRAINT `idTimeVencedor`
