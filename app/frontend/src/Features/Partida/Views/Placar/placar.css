@@ -1,0 +1,82 @@
+.score {
+    position: absolute;
+    width: 440px;
+    height: 200px;
+  } 
+  
+  .logo {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 50px;
+  }
+
+  .nameTeam {
+    position: absolute;
+    width: 53px;
+    height: 35px;
+    text-align: center;
+    font-size: 25px;
+    top: 60px;
+  }
+
+  .team1Logo{
+      right: 320px;
+  }
+
+  .team1name{
+      right: 390px;
+  }
+
+  .team1Goal{
+      right: 270px;
+  }
+
+  .team2Logo{
+      right: 110px;
+  }
+
+  .team2name{
+      right: 45px;
+  }
+
+  .team2Goal{
+      right: 170px;
+  }
+
+  .versus{
+      right: 220px;
+  }
+
+  .dateAndChamp{
+    position: absolute;
+    width: 150px;
+    height: 35px;
+    text-align: center;
+    font-size: 17px;
+    top: 20px;
+  }
+
+  .date{
+      right: 260px;
+  }
+
+  .champ{
+      right: 70px;
+  }
+
+  .btn-outline-light{
+      color: #7749F8; border: 1px solid #7749F8;
+  }
+
+  .btnEditMatch{
+      position: absolute;
+      top: 140px;
+      right: 270px;
+  }
+
+  .btnDelMatch{
+      position: absolute;
+      top: 140px;
+      right: 170px;
+  }

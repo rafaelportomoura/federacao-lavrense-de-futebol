@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import FLFNavBar from './Modules/FLFNavBar/FLFNavBar'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import GridPlacar from './Features/Partida/Views/GridPlacar';
+import Login from './Modules/Auth/Login/Login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <>
+    <BrowserRouter>
+      {/* <FLFNavBar/> */}
+      <Login/>
+      {/* <GridPlacar/> */}
+      <Routes>
+        <Route path="/login">
+          {/* <Manatee /> */}
+        </Route>
+        <Route path="/campeonato">
+
+          {/* <Narwhal /> */}
+        </Route>
+        <Route exact path="/partida">
+          {/* <Placar/> */}
+        </Route>
+        <Route path="/time">
+          {/* <Whale /> */}
+        </Route>
+        <Route path="/alterar-senha">
+          {/* <AlterarSenha/> */}
+        </Route>
+        <Route path="/alterar-email">
+          {/* <AlterarEmail/> */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </>
   );
 }
 
