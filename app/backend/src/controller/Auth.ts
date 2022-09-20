@@ -6,6 +6,7 @@ import AuthService from '../services/Auth'
 import { schemaValidator } from '../Libs/CommonsValidator'
 import { CODE_MESSAGES } from '../config/CodeMessages';
 import HTTP_STATUS_CODES from '../config/httpStatusCode';
+import ApiError from '../exceptions/ApiError';
 
 class AuthController {
   private user_service: AuthService;
@@ -27,6 +28,7 @@ class AuthController {
 
   public async changePassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
+      if (req.body && req.headers) req.body.email = req.headers.email;
       const { email, password } = schemaValidator<IUser>(req.body, change_password);
       await this.user_service.changePassword(email, password);
       res.status(HTTP_STATUS_CODES.OK).json(CODE_MESSAGES.PASSWORD_CHANGE_SUCCESS);
@@ -49,11 +51,14 @@ class AuthController {
 
   public async validLoginToken(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
+      if (!req.headers.authorization) {
+        throw new ApiError.UnauthorizedError(CODE_MESSAGES.UNAUTHORIZED);
+      }
       const token = req.headers.authorization.replace('Bearer ', '');
       const email = await this.user_service.validLoginToken(token);
 
-      if (req.body) req.body.email = email;
-      else req.body = { email };
+      if (req.headers) req.headers.email = email;
+      else req.headers = { email };
       next();
     } catch (error) {
       Logger.error(`[ValidLoginToken]: ${error.message}`)

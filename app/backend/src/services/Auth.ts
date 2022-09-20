@@ -1,4 +1,3 @@
-import { ICodeMessage } from '../Interfaces/ICodeMessage';
 import { IUser, IUserLoginReturn } from '../Interfaces/IUser';
 import UserRepository from '../repositories/User';
 import Credentials from '../credentials/index'
@@ -30,11 +29,11 @@ class AuthService {
     const user_login = await this.repository.getUserByEmailAndPassword(user);
 
     if (!user_login.length) {
-      throw new ApiError.BusinessError(CODE_MESSAGES.INVALID_LOGIN as ICodeMessage)
+      throw new ApiError.BusinessError(CODE_MESSAGES.INVALID_LOGIN)
     }
 
     const token = await this.encrypt(JSON.stringify(user));
-    const expiration = new Date(Date.now() + 1 * 60000).toISOString();
+    const expiration = new Date(Date.now() + 24 * 60000).toISOString();
 
     await this.repository.setToken(token, expiration, user.email);
 
@@ -59,11 +58,11 @@ class AuthService {
     const [user] = await this.repository.getUserByEmail(email);
 
     if (user.expiration < new Date().toISOString()) {
-      throw new ApiError.UnauthorizedError(CODE_MESSAGES.UNAUTHORIZED as ICodeMessage);
+      throw new ApiError.UnauthorizedError(CODE_MESSAGES.UNAUTHORIZED);
     }
 
     if (token !== user.token) {
-      throw new ApiError.UnauthorizedError(CODE_MESSAGES.UNAUTHORIZED as ICodeMessage);
+      throw new ApiError.UnauthorizedError(CODE_MESSAGES.UNAUTHORIZED);
     }
 
     return email;
@@ -71,7 +70,7 @@ class AuthService {
 
   public async changePassword(email: string, new_password: string): Promise<void> {
     const password = await this.encrypt(new_password);
-    await this.repository.changePassword(email, password, new Date(Date.now() + 1 * 60000).toISOString());
+    await this.repository.changePassword(email, password, new Date(Date.now() + 24 * 60000).toISOString());
   }
 }
 
