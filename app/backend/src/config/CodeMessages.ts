@@ -95,4 +95,24 @@ export const CODE_MESSAGES: ICodeMessages = {
     code: "1022",
     message: "Championship champions team can't be deleted",
   },
+  SUCCESS_CREATED_MATCH: {
+    code: "1023",
+    message: "Success created match!",
+  },
+  SUCCESS_EDIT_MATCH: {
+    code: "1024",
+    message: "Success edit match!",
+  },
+  MATCH_NOT_FOUND: {
+    code: "1025",
+    message: "Match was not found!",
+  },
+  MATCH_DELETE: {
+    code: "1026",
+    message: "Success delete match!",
+  },
+  MATCH_EDIT_TEAM: {
+    code: "1027",
+    message: "Success edit match team!",
+  },
 } as const;

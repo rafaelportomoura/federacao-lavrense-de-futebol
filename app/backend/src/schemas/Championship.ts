@@ -34,11 +34,6 @@ export const delete_championship = Joi.object().keys({
   id: id_championship_schema.required(),
 })
 
-export const get_matches_championship_query = Joi.object().keys({
-  page: page_schema,
-  size: size_schema,
-})
-
 
 export const add_champions_team_championship_path = Joi.object().keys({
   championship_id: id_championship_schema.required(),
