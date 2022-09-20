@@ -13,8 +13,8 @@ class ChampionshipTeamsServices {
     this.repository = new ChampionshipTeamsRepository();
   }
 
-  public async postChampionshipTeam(id: number, params: IPatchChampionshipTeamBody): Promise<IPatchChampionshipTeamResponse> {
-    const response = {} as IPatchChampionshipTeamResponse;
+  public async postChampionshipTeam(id: number, params: IPatchChampionshipTeamBody): Promise<Array<IPatchChampionshipTeamResponse>> {
+    const response = [] as Array<IPatchChampionshipTeamResponse>;
     for (const team of params.teams) {
       const db_params = {
         idCampeonato: id,
@@ -22,9 +22,15 @@ class ChampionshipTeamsServices {
       }
       try {
         await this.repository.save(db_params);
-        response[team] = CODE_MESSAGES.CHAMPIONSHIP_TEAM_ADDED;
+        response.push({
+          team_id: team,
+          response: CODE_MESSAGES.CHAMPIONSHIP_TEAM_ADDED,
+        })
       } catch (error) {
-        response[team] = error.code_message;
+        response.push({
+          team_id: team,
+          response: error.code_message,
+        })
       }
 
     }
@@ -40,8 +46,8 @@ class ChampionshipTeamsServices {
     return response;
   }
 
-  public async deleteChampionshipTeam(id: number, params: IDeleteChampionshipTeamBody): Promise<IPatchChampionshipTeamResponse> {
-    const response = {} as IPatchChampionshipTeamResponse;
+  public async deleteChampionshipTeam(id: number, params: IDeleteChampionshipTeamBody): Promise<Array<IPatchChampionshipTeamResponse>> {
+    const response = [] as Array<IPatchChampionshipTeamResponse>;
     for (const team of params.teams) {
       const search_params = {
         championship_id: id,
@@ -53,9 +59,15 @@ class ChampionshipTeamsServices {
           throw new ApiError.BusinessError(CODE_MESSAGES.CHAMPIONSHIP_TEAM_CHAMPIONS_CANT_BE_DELETED);
         }
         await this.repository.deleteChampionshipTeam(search_params);
-        response[team] = CODE_MESSAGES.CHAMPIONSHIP_TEAM_DELETED;
+        response.push({
+          team_id: team,
+          response: CODE_MESSAGES.CHAMPIONSHIP_TEAM_DELETED,
+        })
       } catch (error) {
-        response[team] = error.code_message;
+        response.push({
+          team_id: team,
+          response: error.code_message,
+        })
       }
     }
     return response;

@@ -33,11 +33,13 @@ export interface IDeleteChampionshipTeamBody {
 }
 
 export interface IPatchChampionshipTeamResponse {
-  [key: number]: ICodeMessage
+  team_id: number;
+  response: ICodeMessage
 }
 
 export interface IDeleteChampionshipTeamResponse {
-  [key: number]: ICodeMessage
+  team_id: number;
+  response: ICodeMessage
 }
 
 
