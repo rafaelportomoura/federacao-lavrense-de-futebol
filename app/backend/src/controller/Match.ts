@@ -1,15 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
+import { IChampionshipId, IPostMatch, IPutMatch, IMatchId, IMatchPagination } from "../Interfaces/IMatch";
 import {
   post_match,
   get_one_match,
   put_match_path,
   put_match_body,
-  delete_one_match
+  delete_one_match,
+  get_matches_by_championship_query,
+  get_matches_championship_query
 } from "../schemas/Match";
 import {
   patch_match_team_body
 } from '../schemas/MatchTeam'
-import { IPostMatch, IPutMatch, IMatchId } from "../Interfaces/IMatch";
 import { IPatchMatchTeamBody } from "../Interfaces/IMatchTeam";
 import Logger from '../Libs/Logger';
 import { schemaValidator } from '../Libs/CommonsValidator'
@@ -89,8 +91,23 @@ class MatchController {
       await this.match_team_service.patchMatchTeam({ idPartida: id, ...body });
       res.status(HTTP_STATUS_CODES.OK).json(CODE_MESSAGES.MATCH_EDIT_TEAM);
     } catch (error) {
-      Logger.error(`[DeleteMatch]: ${error.message}`)
+      Logger.error(`[PatchTeamsMatch]: ${error.message}`)
       next(error);
+    }
+  }
+
+  public async getMatchesByChampionshipId(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const params = req.params as unknown as IChampionshipId;
+      const { championship_id } = schemaValidator<IChampionshipId>(params, get_matches_by_championship_query);
+      const query = req.query as unknown as IMatchPagination;
+      const { page, size } = schemaValidator<IMatchPagination>(query, get_matches_championship_query);
+      const response = await this.match_complete_service.getMatchesByChampionshipId({ currentPage: page, perPage: size }, championship_id);
+      res.status(HTTP_STATUS_CODES.OK).json(response);
+    } catch (error) {
+      Logger.error(`[GetMatchesByChampionshipId]: ${error.message}`)
+      next(error);
+
     }
   }
 };

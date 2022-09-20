@@ -4,7 +4,7 @@ import MatchService from './Match';
 import ChampionshipService from "./Championship";
 import MatchTeamService from './MatchTeam'
 import MatchGoals from './Goal'
-// import IMySql from "../Interfaces/IMySql";
+import IMySql from "../Interfaces/IMySql";
 
 class MatchCompleteService {
   private match_service: MatchService;
@@ -29,28 +29,39 @@ class MatchCompleteService {
     return response;
   }
 
-  // async getMatchsByChampionshipId(championship_id: number): Promise<IMySql.IWithPagination<IDbCompleteMatch>> {
-
-  // }
+  async getMatchesByChampionshipId(
+    paginate: IMySql.IPaginateParams,
+    championship_id: number
+  ): Promise<IMySql.IWithPagination<IDbCompleteMatch>> {
+    const matches = await this.match_service.getMatchByChampionship(paginate, championship_id);
+    const response = {
+      pagination: matches.pagination,
+      data: [],
+    } as IMySql.IWithPagination<IDbCompleteMatch>;
+    for await (const e of matches.data) {
+      response.data.push(await this.completeMatch(e));
+    }
+    return response;
+  }
 
   async completeMatch(match: IDbMatch): Promise<IDbCompleteMatch> {
     const championship = await this.championship_service.getOneChampionship(match.idCampeonato);
     const [time1, time2] = await this.match_team_service.getOneMatch(match.idPartida);
-    const time1_goals = await this.match_goals.getGoals({ idPartida: match.idPartida, idTime: time1.idTime });
-    const time2_goals = await this.match_goals.getGoals({ idPartida: match.idPartida, idTime: time2.idTime });
+    if (time1) {
+      const time1_goals = await this.match_goals.getGoals({ idPartida: match.idPartida, idTime: time1.idTime });
+      time1.gols = time1_goals;
+    }
+    if (time2) {
+      const time2_goals = await this.match_goals.getGoals({ idPartida: match.idPartida, idTime: time2.idTime });
+      time2.gols = time2_goals;
+    }
     const response = {
       idPartida: match.idPartida,
       data: match.data,
       tipo: match.tipo,
       campeonato: championship,
-      time1: {
-        ...time1,
-        gols: time1_goals,
-      },
-      time2: {
-        ...time2,
-        gols: time2_goals,
-      },
+      time1: time1 || null,
+      time2: time2 || null,
 
     } as IDbCompleteMatch;
     return response;

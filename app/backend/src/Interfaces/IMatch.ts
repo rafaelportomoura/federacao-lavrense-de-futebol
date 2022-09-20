@@ -39,3 +39,12 @@ export interface IPutMatch {
 export interface IMatchId {
   id: number
 }
+
+export interface IChampionshipId {
+  championship_id: number
+}
+
+export interface IMatchPagination {
+  page: number;
+  size: number;
+}

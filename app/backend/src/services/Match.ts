@@ -4,6 +4,7 @@ import MatchRepository from '../repositories/Match';
 import { CODE_MESSAGES } from '../config/CodeMessages';
 import ApiError from '../exceptions/ApiError';
 import ChampionshipService from "./Championship";
+import IMySql from "../Interfaces/IMySql";
 
 class MatchService {
   private repository: MatchRepository;
@@ -42,6 +43,11 @@ class MatchService {
   async deleteMatch(id: number): Promise<void> {
     await this.getOneMatch(id);
     await this.repository.deleteMatch(id);
+  }
+
+  async getMatchByChampionship(paginate: IMySql.IPaginateParams, championship_id: number): Promise<IMySql.IWithPagination<IDbMatch>> {
+    const response = this.repository.getMatchByChampionship(paginate, championship_id);
+    return response;
   }
 }
 

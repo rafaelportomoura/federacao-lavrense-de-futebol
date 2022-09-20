@@ -3,6 +3,7 @@ import { ITables } from "../Interfaces/ITables";
 import knex from '../database/index';
 import { TABLES } from '../config/Tables';
 import { DBError } from '../exceptions/DbError';
+import IMySql from "../Interfaces/IMySql";
 
 class MatchRepository {
 
@@ -47,6 +48,19 @@ class MatchRepository {
   public async deleteMatch(id: number): Promise<void> {
     try {
       await knex<IDbMatch>(this.table).where({ idPartida: id }).del();
+    } catch (error) {
+      throw new DBError(error, this.table_object_name);
+    }
+  }
+
+  public async getMatchByChampionship(
+    paginate: IMySql.IPaginateParams,
+    championship_id: number
+  ): Promise<IMySql.IWithPagination<IDbMatch>> {
+    try {
+      const response = await knex<IDbMatch>(this.table).where({ idCampeonato: championship_id }).paginate(paginate);
+
+      return response;
     } catch (error) {
       throw new DBError(error, this.table_object_name);
     }

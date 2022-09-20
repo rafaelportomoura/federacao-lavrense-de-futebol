@@ -15,6 +15,7 @@ export interface IPatchMatchTeamBody {
 }
 
 export interface IMatchTeamComplete {
+  gols?: number[];
   idTime: number;
   nome: number;
   image: number;
