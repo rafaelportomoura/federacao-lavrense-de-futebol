@@ -11,3 +11,9 @@ export interface IGetGoal {
 export interface IGoalId {
   idGol: number;
 }
+
+export interface IGoal {
+  idGol: number;
+  idTime: number;
+  idPartida: number;
+}

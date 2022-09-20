@@ -1,5 +1,7 @@
 
-import { IPostGoal, IGetGoal } from "../Interfaces/IGoal";
+import { CODE_MESSAGES } from "../config/CodeMessages";
+import ApiError from "../exceptions/ApiError";
+import { IPostGoal, IGetGoal, IGoal } from "../Interfaces/IGoal";
 import GoalRepository from '../repositories/Goal';
 
 
@@ -19,6 +21,19 @@ class GoalService {
     const goals_ids = await this.repository.getGoals(params);
     const response = goals_ids.map((ob) => ob.idGol);
     return response;
+  }
+
+  async getGoal(id: number): Promise<IGoal> {
+    const response = await this.repository.getGoal(id);
+    if (!response) {
+      throw new ApiError.NotFoundError(CODE_MESSAGES.GOAL_NOT_FOUND)
+    }
+    return response;
+  }
+
+  async deleteGoals(id: number): Promise<void> {
+    await this.getGoal(id);
+    await this.repository.deleteGoal(id);
   }
 
 }
