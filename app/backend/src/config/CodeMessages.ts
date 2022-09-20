@@ -115,4 +115,16 @@ export const CODE_MESSAGES: ICodeMessages = {
     code: "1027",
     message: "Success edit match team!",
   },
+  GOAL_DELETED: {
+    code: "1028",
+    message: "Goal has been deleted",
+  },
+  GOAL_CREATED: {
+    code: "1029",
+    message: "Goal has been created",
+  },
+  GOAL_NOT_FOUND: {
+    code: "1030",
+    message: "Goal was not found!",
+  },
 } as const;
