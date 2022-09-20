@@ -55,4 +55,44 @@ export const CODE_MESSAGES: ICodeMessages = {
     code: "1012",
     message: "Team can't be deleted!",
   },
+  SUCCESS_POST_CHAMPIONSHIP: {
+    code: "1013",
+    message: "Championship was created!",
+  },
+  CHAMPIONSHIP_WAS_NOT_FOUND: {
+    code: "1014",
+    message: "Championship was not found!",
+  },
+  CHAMPIONSHIP_WAS_UPDATED: {
+    code: "1015",
+    message: "Championship was updated",
+  },
+  CHAMPIONSHIP_WAS_DELETED: {
+    code: "1016",
+    message: "Championship was deleted",
+  },
+  CHAMPIONSHIP_CANT_BE_DELETED: {
+    code: "1017",
+    message: "Championship can't be deleted!",
+  },
+  CHAMPIONSHIP_TEAM_ADDED: {
+    code: "1018",
+    message: "Championship team has been added!",
+  },
+  CHAMPIONSHIP_TEAM_DELETED: {
+    code: "1019",
+    message: "Championship teams has been deleted!",
+  },
+  CHAMPIONSHIP_TEAM_NOT_FOUND: {
+    code: "1020",
+    message: "Championship team was not found!",
+  },
+  CHAMPIONSHIP_TEAM_CHAMPIONS: {
+    code: "1021",
+    message: "Championship champions team has been added!",
+  },
+  CHAMPIONSHIP_TEAM_CHAMPIONS_CANT_BE_DELETED: {
+    code: "1022",
+    message: "Championship champions team can't be deleted",
+  },
 } as const;
