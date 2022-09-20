@@ -4,8 +4,8 @@ import Joi from 'joi';
 const name_schema = Joi.string().max(80);
 const page_schema = Joi.number().min(1).default(1);
 const size_schema = Joi.number().min(1).default(10)
-const id_camp_schema = Joi.number().min(0).max(99999999999);
-const id_team_schema = Joi.number().min(0).max(99999999999);
+const id_camp_schema = Joi.number().min(1).max(99999999999);
+const id_team_schema = Joi.number().min(1).max(99999999999);
 
 export const post_team = Joi.object().keys({
   nome: name_schema.required(),

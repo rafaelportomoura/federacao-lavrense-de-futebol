@@ -43,10 +43,12 @@ class TeamService {
   }
 
   async putTeam(id: number, name: string): Promise<void> {
+    await this.getOneTeam(id);
     await this.repository.updateTeamName(id, name);
   }
 
   async deleteTeam(id: number): Promise<void> {
+    await this.getOneTeam(id);
     await this.repository.deleteTeam(id);
   }
 }

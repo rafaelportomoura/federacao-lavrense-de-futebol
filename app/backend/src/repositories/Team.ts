@@ -16,9 +16,9 @@ class TeamRepository {
     this.table_object_name = 'team';
   }
 
-  public async save(user: ITeam): Promise<void> {
+  public async save(team: ITeam): Promise<void> {
     try {
-      await knex<IDbTeam>(this.table).insert(user);
+      await knex<IDbTeam>(this.table).insert(team);
     } catch (error) {
       throw new DBError(error, this.table_object_name);
     }
@@ -44,7 +44,7 @@ class TeamRepository {
 
   public async getTeamsFilterByName(paginate: IMySQL.IPaginateParams, name: string): Promise<IMySQL.IWithPagination<IDbTeam>> {
     try {
-      const response = await knex<IDbTeam>(this.table).whereLike('nome', `%${name}%`).paginate(paginate);
+      const response = await knex<IDbTeam>(this.table).whereILike('nome', `%${name}%`).paginate(paginate);
       return response as unknown as IMySQL.IWithPagination<IDbTeam>;
     } catch (error) {
       throw new DBError(error, this.table_object_name);
@@ -53,7 +53,11 @@ class TeamRepository {
 
   public async getTeamsFromCamp(paginate: IMySQL.IPaginateParams, id_camp: number): Promise<IMySQL.IWithPagination<IDbTeam>> {
     try {
-      const response = await knex<IDbTeam>(this.table).select(`${this.table}.idTime`, `${this.table}.nome`, `${this.table}.image`).join(TABLES.CampeonatoTime, `${this.table}.idTime`, `${TABLES.CampeonatoTime}.idTime`).where({ idCampeonato: id_camp }).paginate(paginate);
+      const response = await knex<IDbTeam>(this.table)
+        .select(`${this.table}.idTime`, `${this.table}.nome`, `${this.table}.image`)
+        .join(TABLES.CampeonatoTime, `${this.table}.idTime`, `${TABLES.CampeonatoTime}.idTime`)
+        .where({ idCampeonato: id_camp })
+        .paginate(paginate);
       return response as unknown as IMySQL.IWithPagination<IDbTeam>;
     } catch (error) {
       throw new DBError(error, this.table_object_name);
@@ -62,7 +66,12 @@ class TeamRepository {
 
   public async getTeamsFromCampFilterByName(paginate: IMySQL.IPaginateParams, param: IGetTeams): Promise<IMySQL.IWithPagination<IDbTeam>> {
     try {
-      const response = await knex<IDbTeam>(this.table).select(`${this.table}.idTime`, `${this.table}.nome`, `${this.table}.image`).join(TABLES.CampeonatoTime, `${this.table}.idTime`, `${TABLES.CampeonatoTime}.idTime`).where({ idCampeonato: param.id_camp }).whereLike('nome', `%${param.nome}%`).paginate(paginate);
+      const response = await knex<IDbTeam>(this.table)
+        .select(`${this.table}.idTime`, `${this.table}.nome`, `${this.table}.image`)
+        .join(TABLES.CampeonatoTime, `${this.table}.idTime`, `${TABLES.CampeonatoTime}.idTime`)
+        .where({ idCampeonato: param.id_camp })
+        .whereILike('nome', `%${param.nome}%`)
+        .paginate(paginate);
       return response as unknown as IMySQL.IWithPagination<IDbTeam>;
     } catch (error) {
       throw new DBError(error, this.table_object_name);
