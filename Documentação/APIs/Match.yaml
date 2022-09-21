@@ -1,0 +1,565 @@
+openapi: 3.0.1
+info:
+  title: Match
+  description: Federação Lavrense de Futebol
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desenvolvimento
+
+tags:
+  - name: Match
+    description: Manager system matches
+
+paths:
+  /match:
+    post:
+      summary: Post match
+      description: This resource create match of a individual championship
+      tags:
+        - Match
+      requestBody:
+        description: Required body to create match
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMatch"
+      security:
+        - BearerAuth: []
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                SUCCESS_CREATED_MATCH:
+                  $ref: "#/components/schemas/ResponseSuccessCreatedMatch"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationError:
+                  $ref: "#/components/schemas/ResponseValidationError"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ChampionshipNotFound:
+                  $ref: "#/components/schemas/ResponseChampionshipNotFound"
+                ChampionshipTeamNotFound:
+                  $ref: "#/components/schemas/ResponseChampionshipTeamNotFound"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+
+  /match/{id}:
+    get:
+      summary: Get individual match
+      description: This resource get individual matches
+      tags:
+        - Match
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            min: 1
+            max: 99999999999
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Matches"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorId:
+                  $ref: "#/components/schemas/ResponseValidationErrorId"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                MatchNotFound:
+                  $ref: "#/components/schemas/ResponseMatchNotFound"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+    put:
+      summary: Edit individual match
+      description: This resource edit matches of a individual championship
+      tags:
+        - Match
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            min: 1
+            max: 99999999999
+      requestBody:
+        description: Required body to create match
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditMatch"
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                EditMatch:
+                  $ref: "#/components/schemas/ResponseSuccessEditMatch"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationError:
+                  $ref: "#/components/schemas/ResponseValidationError"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ChampionshipNotFound:
+                  $ref: "#/components/schemas/ResponseChampionshipNotFound"
+                MatchNotFound:
+                  $ref: "#/components/schemas/ResponseMatchNotFound"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+    delete:
+      summary: Delete match
+      description: This resource delete individual match
+      tags:
+        - Match
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            min: 1
+            max: 99999999999
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                EditMatch:
+                  $ref: "#/components/schemas/ResponseSuccessDeleteMatch"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorId:
+                  $ref: "#/components/schemas/ResponseValidationErrorId"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                MatchNotFound:
+                  $ref: "#/components/schemas/ResponseMatchNotFound"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+
+  /match/{id}/team:
+    patch:
+      summary: Edit individual match teams
+      description: This resource edit match teams
+      tags:
+        - Match
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            min: 1
+            max: 99999999999
+      requestBody:
+        description: Required body to edit match teams
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditMatchTeam"
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                EditMatch:
+                  $ref: "#/components/schemas/ResponseSuccessEditMatchTeam"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationError:
+                  $ref: "#/components/schemas/ResponseValidationError"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ChampionshipTeamNotFound:
+                  $ref: "#/components/schemas/ResponseChampionshipTeamNotFound"
+                MatchNotFound:
+                  $ref: "#/components/schemas/ResponseMatchNotFound"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+  /match/championship/{championship_id}:
+    get:
+      summary: Get matches from championship
+      description: This resource get matches of a individual championship
+      tags:
+        - Match
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            min: 1
+            default: 1
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            min: 10
+            default: 10
+        - name: championship_id
+          in: path
+          required: true
+          schema:
+            type: number
+            min: 1
+            max: 99999999999
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChampionshipMatches"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorId:
+                  $ref: "#/components/schemas/ResponseValidationErrorId"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+
+components:
+  schemas:
+    ResponseCodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    UNAUTHORIZED:
+      value:
+        code: "1003"
+        message: "Invalid Token!"
+    EditMatchTeam:
+      type: object
+      properties:
+        idTime1:
+          type: number
+        idTime2:
+          type: number
+    EditMatch:
+      type: object
+      properties:
+        data:
+          type: string
+          format: date-time
+        idCampeonato:
+          type: number
+        tipo:
+          type: string
+    CreateMatch:
+      type: object
+      properties:
+        data:
+          type: string
+          format: date-time
+          required: true
+        idCampeonato:
+          type: number
+          required: true
+        tipo:
+          type: string
+          required: true
+    ResponseChampionshipTeamNotFound:
+      value:
+        code: "1020"
+        message: Championship team was not found!
+    ResponseChampionshipNotFound:
+      value:
+        code: "1014"
+        message: Championship was not found!
+    ResponseSuccessCreatedMatch:
+      value:
+        code: "1023"
+        message: Success created match!
+    ResponseSuccessEditMatch:
+      value:
+        code: "1024"
+        message: Success edit match!
+    ResponseMatchNotFound:
+      value:
+        code: "1025"
+        message: Match was not found!
+    ResponseSuccessDeleteMatch:
+      value:
+        code: "1026"
+        message: Success delete match!
+    ResponseSuccessEditMatchTeam:
+      value:
+        code: "1027"
+        message: Success edit match team!
+    ResponseAlreadyHave:
+      value:
+        code: "0003"
+        message: Already have this championship in database
+    ResponseValidationError:
+      value:
+        code: "0002"
+        message: "string"
+    ResponseValidationErrorId:
+      value:
+        code: "0002"
+        message: '[id] "id" is required'
+    InternalServerError:
+      value:
+        code: "1007"
+        message: INTERNAL SERVER ERROR
+    Teams:
+      type: object
+      properties:
+        idTime:
+          type: number
+        nome:
+          type: string
+        image:
+          type: string
+        gols:
+          type: array
+          items:
+            type: number
+          example: [213532, 3412]
+    Matches:
+      type: object
+      properties:
+        idPartida:
+          type: number
+        data:
+          type: string
+          format: date-time
+        campeonato:
+          $ref: "#/components/schemas/Championship"
+        tipo:
+          type: string
+        time1:
+          $ref: "#/components/schemas/Teams"
+        time2:
+          $ref: "#/components/schemas/Teams"
+    ChampionshipMatches:
+      type: object
+      properties:
+        total:
+          type: number
+        lastPage:
+          type: number
+        currentPage:
+          type: number
+        perPage:
+          type: number
+        from:
+          type: number
+        to:
+          type: number
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Matches"
+    Championship:
+      type: object
+      properties:
+        idCampeonato:
+          type: integer
+          min: 1
+          max: 99999999999
+        idTimeVencedor:
+          type: integer
+          min: 1
+          max: 99999999999
+        nome:
+          type: string
+          uniqueItems: true
+        image:
+          type: string
+          format: binary
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      name: Authorization
+      in: header

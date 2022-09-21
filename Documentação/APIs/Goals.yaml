@@ -1,0 +1,184 @@
+openapi: 3.0.1
+info:
+  title: Goal
+  description: Federação Lavrense de Futebol
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desenvolvimento
+
+tags:
+  - name: Goal
+    description: Manager system goals
+
+paths:
+  /goal:
+    post:
+      summary: Create goal
+      description: This resource create a individual goal
+      tags:
+        - Goal
+      requestBody:
+        description: Required body to create championship
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idTime:
+                  type: number
+                  required: true
+                idPartida:
+                  type: number
+                  required: true
+      security:
+        - BearerAuth: []
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                GoalCreated:
+                  $ref: "#/components/schemas/ResponseGoalCreated"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorPartida:
+                  $ref: "#/components/schemas/ResponseValidationErrorIdPartida"
+                ValidationErrorTime:
+                  $ref: "#/components/schemas/ResponseValidationErrorIdTime"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+  /goal/{id}:
+    delete:
+      summary: Delete goal
+      description: This resource delete a individual goal
+      tags:
+        - Goal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      security:
+        - BearerAuth: []
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                GoalCreated:
+                  $ref: "#/components/schemas/ResponseGoalDeleted"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorId:
+                  $ref: "#/components/schemas/ResponseValidationErrorId"
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                ValidationErrorId:
+                  $ref: "#/components/schemas/ResponseGoalNotFound"
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                UNAUTHORIZED:
+                  $ref: "#/components/schemas/UNAUTHORIZED"
+        500:
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCodeMessage"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/schemas/InternalServerError"
+
+components:
+  schemas:
+    ResponseCodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    UNAUTHORIZED:
+      value:
+        code: "1003"
+        message: "Invalid Token!"
+    ResponseGoalCreated:
+      value:
+        code: "1029"
+        message: Goal was created!
+    ResponseGoalNotFound:
+      value:
+        code: "1030"
+        message: Goal was not found!
+    ResponseGoalDeleted:
+      value:
+        code: "1028"
+        message: Goal was deleted!
+    ResponseValidationErrorId:
+      value:
+        code: "0002"
+        message: '[id] "id" is required'
+    ResponseValidationErrorIdTime:
+      value:
+        code: "0002"
+        message: '[idTime] "idTime" is required'
+    ResponseValidationErrorIdPartida:
+      value:
+        code: "0002"
+        message: '[idPartida] "idPartida" is required'
+    InternalServerError:
+      value:
+        code: "1007"
+        message: INTERNAL SERVER ERROR
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      name: Authorization
+      in: header
