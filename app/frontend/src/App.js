@@ -1,39 +1,20 @@
 import './App.css';
-import FLFNavBar from './Modules/FLFNavBar/FLFNavBar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import GridPlacar from './Features/Partida/Views/GridPlacar';
 import Login from './Modules/Auth/Login/Login';
+import Layout from './Modules/Layout/Layout';
+import RequireAuth from './Modules/Auth/RequireAuth';
 
 function App() {
   return (
-  <>
-    <BrowserRouter>
-      {/* <FLFNavBar/> */}
-      <Login/>
-      {/* <GridPlacar/> */}
-      <Routes>
-        <Route path="/login">
-          {/* <Manatee /> */}
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<RequireAuth/>}>
+      <Route path="/" element={<Layout/>} >
+          <Route path="placar" element={<GridPlacar/>}/>
         </Route>
-        <Route path="/campeonato">
-
-          {/* <Narwhal /> */}
-        </Route>
-        <Route exact path="/partida">
-          {/* <Placar/> */}
-        </Route>
-        <Route path="/time">
-          {/* <Whale /> */}
-        </Route>
-        <Route path="/alterar-senha">
-          {/* <AlterarSenha/> */}
-        </Route>
-        <Route path="/alterar-email">
-          {/* <AlterarEmail/> */}
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </>
+      </Route>
+    </Routes>
   );
 }
 

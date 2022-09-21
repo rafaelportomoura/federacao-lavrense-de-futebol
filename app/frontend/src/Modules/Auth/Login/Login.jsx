@@ -1,34 +1,56 @@
 import React from 'react';
-import {useRef, useState, useEffect, useContext} from 'react';
-import AuthContext from '../../../context/AuthProvider';
+import {useRef, useState, useEffect} from 'react';
+import useAuth from '../../../hooks/useAuth';
 import './login.css';
 import axios from '../../../api/axios';
+const LOGIN_URL = '/auth/login'
 
 
 const Login = () => {
-    // const userRef = useRef();
-    // const errRef = useRef();
+    const userRef = useRef();
+    const errRef = useRef();
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
-    const {setAuth} = useContext(AuthContext);
-    // const [errMsg, setErrMsg] = useState('');
-    const [sucess, setSucess] = useState(false); 
+    const [errMsg, setErrMsg] = useState(''); 
+    const {setAuth} = useAuth();
 
-    // useEffect(() => {
-    //     userRef.current.focus();
-    // }, [])
+    useEffect(() => {
+        userRef.current.focus();
+    }, [])
 
-    // useEffect(() => {
-    //     setErrMsg('')
-    // }, [user, pwd])
+    useEffect(() => {
+        setErrMsg('')
+    }, [user, pwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSucess(true);
+
+        try{
+            const response = await axios.post(LOGIN_URL, 
+                JSON.stringify({email: user, password: pwd}),{
+                    headers: {'Content-Type' : 'application/json'},
+                    withCredentials: true 
+                });
+            console.log(JSON.stringify(response?.data));
+            const accessToken = response?.data?.token;
+            setAuth({ user, pwd, accessToken});
+        } catch (err){
+            if(!err?.response){
+                setErrMsg('No server response');
+            } else if (err.response?.status === 400){
+                setErrMsg('bad request');
+            } else if (err.response?.status === 401){
+                setErrMsg('unauthorized')
+            } else {
+                setErrMsg('login failed')
+            }
+            errRef.current.focus(); 
+        }
     }
 
     return(    
-        <div className="row">
+        <div>
+            <p ref={errRef}>{errMsg}</p>
             <div className="column" >
                 <h2 className="center">
                     <br/>
@@ -49,6 +71,7 @@ const Login = () => {
                             placeholder="Insira seu email"
                             onChange={(e) => setUser(e.target.value)}
                             value={user}
+                            ref = {userRef}
                         />
                     </div>
                     <div className="form-group">
