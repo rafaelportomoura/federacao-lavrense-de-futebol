@@ -11,6 +11,7 @@ const PartidaPage = () => {
     const { auth } = useAuth();
     const { id } = useId();
 
+
     useEffect(() => {
         const getPartidas = async () => {
             try{
@@ -34,6 +35,8 @@ const PartidaPage = () => {
         }
         getPartidas()
     },[id])
+
+
 
     return (
         <>
