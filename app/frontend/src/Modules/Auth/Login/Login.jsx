@@ -3,6 +3,7 @@ import {useRef, useState, useEffect} from 'react';
 import useAuth from '../../../hooks/useAuth';
 import './login.css';
 import axios from '../../../api/axios';
+import { useNavigate} from 'react-router-dom'
 const LOGIN_URL = '/auth/login'
 
 
@@ -13,6 +14,8 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState(''); 
     const {setAuth} = useAuth();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         userRef.current.focus();
@@ -34,6 +37,7 @@ const Login = () => {
             console.log(JSON.stringify(response?.data));
             const accessToken = response?.data?.token;
             setAuth({ user, pwd, accessToken});
+            navigate("/partida", {replace: true});
         } catch (err){
             if(!err?.response){
                 setErrMsg('No server response');

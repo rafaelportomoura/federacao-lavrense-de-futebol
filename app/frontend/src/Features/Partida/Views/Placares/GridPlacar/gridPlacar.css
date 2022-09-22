@@ -1,0 +1,23 @@
+.col{
+    width: 200px;
+    height: 200px;
+}
+
+
+.score {
+    position: absolute;
+    width: 440px;
+    height: 200px;
+    } 
+
+    .btnEditMatch{
+        position: absolute;
+        top: 140px;
+        right: 270px;
+    }
+
+    .btnDelMatch{
+    position: absolute;
+    top: 140px;
+    right: 170px;
+}
