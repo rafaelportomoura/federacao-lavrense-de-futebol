@@ -16,6 +16,7 @@ const GridPlacar = ({partidas}) => {
     const [showModal1, setShowModal1] = useState(false);
     const [showModal2, setShowModal2] = useState(false)
     const [inputData, setInputData] = useState({
+        idPartida: null,
         data: '',
         idCampeonato: null,
         idTime1: null,
@@ -80,13 +81,12 @@ const GridPlacar = ({partidas}) => {
 
     const salvarPartida = async () => {
         try{
-            console.log('oie')
-            await axios.put(`/match/${id}`, {data: inputData.data, idCampeonato: inputData.idCampeonato, tipo: 'final'}, {
+            await axios.put(`/match/${inputData.idPartida}`, {data: inputData.data, idCampeonato: inputData.idCampeonato, tipo: 'final'}, {
                 headers: { 'Content-Type': 'application/json', 'Authorization' : `Bearer ${auth?.accessToken}`},
                 withCredentials: true
             });
 
-            await axios.patch(`/match/${id}/team`,{idTime1: inputData.idTime1, idTime2: inputData.idTime2},{
+            await axios.patch(`/match/${inputData.idPartida}/team`,{idTime1: inputData.idTime1, idTime2: inputData.idTime2},{
                 headers: { 'Content-Type': 'application/json', 'Authorization' : `Bearer ${auth?.accessToken}`},
                 withCredentials: true
             })
@@ -115,7 +115,65 @@ const GridPlacar = ({partidas}) => {
                         <div class="col">
                             <Placar partida={partida}/>
                             <div class="score">
-                                <Button onclick={handleShow1}variant="outline-primary btnDelMatch" ><BsFillTrashFill/></Button>
+                            <Modal show={showModal1} onHide={handleClose1}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Adicionar Partida</Modal.Title>
+                                </Modal.Header>
+                                <Form >
+                                <Modal.Body>
+                                    <div class="row">
+                                        <div class="col">
+                                            <Form.Group >
+                                                <Form.Label controlId="dataLabel" className="dataLabel" >Data</Form.Label>
+                                                <Form.Control value={inputData.data.split('T')[0]} onChange={e => setInputData({...inputData, data: `${e.target.value}T00:00:00.000Z`, idPartida: partida.idPartida})} type="date" name="data" />
+                                            </Form.Group>
+                                        </div>
+                                        <div class="col">
+                                        <Form.Group>
+                                            <Form.Label className="campeonatoLabel">Campeonato</Form.Label>
+                                            <Form.Control as="select" name="campeonato" value={inputData.idCampeonato} onChange={e => setInputData({...inputData, idCampeonato: e.target.value})}>
+                                                    {campeonatos?.map((campeonato) => (
+                                                        <option value={campeonato.idCampeonato}>{campeonato.nome}</option>
+                                                    ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <Form.Group>
+                                            <Form.Control as="select" name="time 1" value={inputData.idTime1} onChange={e => setInputData({...inputData, idTime1: e.target.value})}>
+                                                        {times?.map((time) => (
+                                                            <option value={time.idTime}>{time.nome}</option>
+                                                        ))}
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </div>
+                                        <div class="col x">
+                                            X
+                                        </div>
+                                        <div class="col">
+                                            <Form.Group>
+                                            <Form.Control as="select" name="time 2" value={inputData.idTime2} onChange={e => setInputData({...inputData, idTime2: e.target.value})}>
+                                                        {times?.map((time) => (
+                                                            <option value={time.idTime}>{time.nome}</option>
+                                                        ))}
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </div>
+                                    </div>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose1}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={salvarPartida}>
+                                    Save Changes
+                                </Button>
+                                </Modal.Footer>
+                                </Form>
+                            </Modal>
+                                <Button onClick={handleShow1}variant="outline-primary btnDelMatch" ><BsFillTrashFill/></Button>
                                 <Button variant="outline-primary btnEditMatch" ><BsFillPencilFill/></Button>
                             </div>
                         </div> 
@@ -124,64 +182,6 @@ const GridPlacar = ({partidas}) => {
                     </div>
             ))}
         </div>
-        <Modal show={showModal1} onHide={handleClose1}>
-            <Modal.Header closeButton>
-                <Modal.Title>Adicionar Partida</Modal.Title>
-            </Modal.Header>
-            <Form >
-            <Modal.Body>
-                <div class="row">
-                    <div class="col">
-                        <Form.Group >
-                            <Form.Label controlId="dataLabel" className="dataLabel" >Data</Form.Label>
-                            <Form.Control value={inputData.data.split('T')[0]} onChange={e => setInputData({...inputData, data: `${e.target.value}T00:00:00.000Z`})} type="date" name="data" />
-                        </Form.Group>
-                    </div>
-                    <div class="col">
-                    <Form.Group>
-                        <Form.Label className="campeonatoLabel">Campeonato</Form.Label>
-                        <Form.Control as="select" name="campeonato" value={inputData.idCampeonato} onChange={e => setInputData({...inputData, idCampeonato: e.target.value})}>
-                                {campeonatos?.map((campeonato) => (
-                                    <option value={campeonato.idCampeonato}>{campeonato.nome}</option>
-                                ))}
-                        </Form.Control>
-                    </Form.Group>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <Form.Group>
-                        <Form.Control as="select" name="time 1" value={inputData.idTime1} onChange={e => setInputData({...inputData, idTime1: e.target.value})}>
-                                    {times?.map((time) => (
-                                        <option value={time.idTime}>{time.nome}</option>
-                                    ))}
-                            </Form.Control>
-                        </Form.Group>
-                    </div>
-                    <div class="col x">
-                        X
-                    </div>
-                    <div class="col">
-                        <Form.Group>
-                        <Form.Control as="select" name="time 2" value={inputData.idTime2} onChange={e => setInputData({...inputData, idTime2: e.target.value})}>
-                                    {times?.map((time) => (
-                                        <option value={time.idTime}>{time.nome}</option>
-                                    ))}
-                            </Form.Control>
-                        </Form.Group>
-                    </div>
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose1}>
-                Close
-            </Button>
-            <Button variant="primary" onClick={salvarPartida}>
-                Save Changes
-            </Button>
-            </Modal.Footer>
-            </Form>
-        </Modal>
         </>
     ) 
 }
