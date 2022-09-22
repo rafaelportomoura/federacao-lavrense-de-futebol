@@ -17,10 +17,10 @@ const GridPlacar = ({partidas}) => {
     const [showModal2, setShowModal2] = useState(false)
     const [inputData, setInputData] = useState({
         idPartida: null,
-        data: '',
+        data: '',   
         idCampeonato: null,
         idTime1: null,
-        idTime: null,
+        idTime2: null,
     })
 
     const handleClose1 = () => setShowModal1(false);
