@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import PartidaPage from './Features/Partida/Views/PartidaPage';
+import Login from './Modules/Auth/Login/Login';
+import Layout from './Modules/Layout/Layout';
+import RequireAuth from './Modules/Auth/RequireAuth';
+import { ChampionshipProvider } from './context/ChampionshipProvider';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<RequireAuth/>}>
+      <Route path="/" element={<Layout/>} >
+          <Route path="partida" element={<PartidaPage/>}/>
+      </Route>
+      </Route>
+    </Routes>
   );
   
 }

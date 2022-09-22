@@ -1,0 +1,30 @@
+.column {
+    float: left;
+    width: 49.7%;
+    padding: 10px;
+    height: 600px; 
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.center {
+    margin: auto;
+    width: 450px;
+    height: 350px;
+    border: 3px solid white;
+    padding: 5px;
+    text-align: center; 
+    font-size: 35px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.btn-outline-light{
+    color: #7749F8; border: 1px solid #7749F8;
+}
+.btn-outline-danger button:hover{
+    background-color: royalblue;
+}
