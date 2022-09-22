@@ -9,6 +9,7 @@
 ## Diagrama de Classes
 
 O diagrama de classes é uma representação da estrutura e relações das classes que servem de modelo para objetos.
+
 ![Diagrama de Classes](./assets/Diagrama%20de%20classes.png)
 
 ## Diagrama de sequência

@@ -19,7 +19,7 @@ class ChampionshipController {
     try {
       const body = schemaValidator<IChampionship.IPostChampionship>(req.body, championship_schemas.post_championship);
       await this.service.postChampionship(body);
-      res.status(HTTP_STATUS_CODES.CREATED).json(CODE_MESSAGES.SUCCESS_POST_TEAM);
+      res.status(HTTP_STATUS_CODES.CREATED).json(CODE_MESSAGES.SUCCESS_POST_CHAMPIONSHIP);
     } catch (error) {
       Logger.error(`[PostChampionship]: ${error.message}`)
       next(error);
